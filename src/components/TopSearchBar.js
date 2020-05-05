@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,9 +9,10 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
-import { Picker } from '@react-native-community/picker';
-import { connect } from 'react-redux';
-import { getCategories } from '../redux/actions/categories';
+import {Picker} from '@react-native-community/picker';
+import {connect} from 'react-redux';
+import {getCategories} from '../redux/actions/categories';
+import axios from 'axios';
 const styles = StyleSheet.create({
   headerPickers: {
     display: 'flex',
@@ -40,20 +41,24 @@ const styles = StyleSheet.create({
 
 class TopSearchBar extends Component {
   componentDidMount() {
-    this.props.dispatch(getCategories());
+    axios.get('genre/movie/list').then(response => {
+      let items = response.data.genres;
+      this.setState({categories: items});
+    });
   }
 
   state = {
+    categories: [],
     selectedCategory: '',
     selectedYear: '',
   };
 
   setCategory = category => {
-    this.setState({ selectedCategory: category })
+    this.setState({selectedCategory: category});
   };
 
-  setYear = year => { 
-    this.setState({ selectedYear: year })
+  setYear = year => {
+    this.setState({selectedYear: year});
   };
 
   years = () => {
@@ -69,8 +74,8 @@ class TopSearchBar extends Component {
   };
   render() {
     var categories = null;
-    if (this.props.categories.items.length) {
-      categories = this.props.categories.items.map((x, index) => (
+    if (this.state.categories.length) {
+      categories = this.state.categories.map((x, index) => (
         <Picker.Item key={Date.now() + index} label={x.name} value={x.id} />
       ));
     }

@@ -23,6 +23,7 @@ import {
 import {getMovies} from './src/redux/actions/movies';
 import {connect} from 'react-redux';
 import {ListMovies} from './src/components/ListMovies';
+import { Button } from 'native-base';
 
 const styles = StyleSheet.create({
   body: {
