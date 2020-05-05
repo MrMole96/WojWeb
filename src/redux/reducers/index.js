@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {MoviesReducer} from './movies';
-import {CategoriesReducer} from './categories';
+import {SearchReducer} from './search.js';
 export default combineReducers({
   movies: MoviesReducer,
-  categories: CategoriesReducer,
+  search: SearchReducer,
 });

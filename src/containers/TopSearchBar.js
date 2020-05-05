@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,18 +6,20 @@ import {
   View,
   List,
   Text,
+  Picker,
   StatusBar,
   FlatList,
 } from 'react-native';
-import {Picker} from '@react-native-community/picker';
-import {connect} from 'react-redux';
-import {getCategories} from '../redux/actions/categories';
+// import {Picker} from '@react-native-community/picker';
+import { connect } from 'react-redux';
+import { updateSearch } from '../redux/actions/search';
 import axios from 'axios';
 const styles = StyleSheet.create({
   headerPickers: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingBottom: 5
   },
   pickerCategory: {
     width: 150,
@@ -43,22 +45,16 @@ class TopSearchBar extends Component {
   componentDidMount() {
     axios.get('genre/movie/list').then(response => {
       let items = response.data.genres;
-      this.setState({categories: items});
+      this.setState({ categories: items });
     });
   }
 
   state = {
     categories: [],
-    selectedCategory: '',
-    selectedYear: '',
   };
 
-  setCategory = category => {
-    this.setState({selectedCategory: category});
-  };
-
-  setYear = year => {
-    this.setState({selectedYear: year});
+  updateSearch = (name, value) => {
+    this.props.dispatch(updateSearch({ name: name, value: value }));
   };
 
   years = () => {
@@ -82,16 +78,16 @@ class TopSearchBar extends Component {
     return (
       <View style={styles.headerPickers}>
         <Picker
-          selectedValue={this.state.selectedCategory}
+          selectedValue={this.props.search.category}
           style={styles.pickerCategory}
-          onValueChange={itemValue => this.setCategory(itemValue)}>
+          onValueChange={itemValue => this.updateSearch('category', itemValue)}>
           {categories}
         </Picker>
         {/* Stworzyc do tego nowy komponent */}
         <Picker
           mode="dropdown"
-          selectedValue={this.state.selectedYear}
-          onValueChange={itemValue => this.setYear(itemValue)}
+          selectedValue={this.props.search.year}
+          onValueChange={itemValue => this.updateSearch('year', itemValue)}
           style={styles.pickerYear}>
           {this.years()}
         </Picker>
@@ -101,7 +97,7 @@ class TopSearchBar extends Component {
 }
 function mapPropsToState(state) {
   return {
-    categories: state.categories,
+    search: state.search,
   };
 }
 export default connect(mapPropsToState)(TopSearchBar);

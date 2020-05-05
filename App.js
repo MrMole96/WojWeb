@@ -9,10 +9,11 @@ import {
   Picker,
   StatusBar,
   FlatList,
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {MovieItem} from './src/components/MovieItem';
-import TopSearchBar from './src/components/TopSearchBar';
-import {Header} from './src/components/Header';
+
 import {TextInput} from 'react-native';
 import {
   LearnMoreLinks,
@@ -22,41 +23,52 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {getMovies} from './src/redux/actions/movies';
 import {connect} from 'react-redux';
-import {ListMovies} from './src/components/ListMovies';
-import { Button } from 'native-base';
+
+import {Button} from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
+import {Test} from './src/components/Test';
+import Trending from './src/containers/Trending';
 
 const styles = StyleSheet.create({
-  body: {
+  safeAreView: {
+    flex: 1,
     backgroundColor: '#1D3557',
+  },
+  scrollView: {
+    flex: 1,
   },
 });
 
+const Drawer = createDrawerNavigator();
 class App extends Component {
-  componentDidMount() {
-    this.props.dispatch(getMovies());
-  }
-
   render() {
     return (
-      <View style={styles.body}>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <Header />
-            <TopSearchBar />
-            {!this.props.movies.loader && (
-              <ListMovies items={this.props.movies.items} />
-            )}
-          </ScrollView>
-        </SafeAreaView>
-      </View>
+      <SafeAreaView style={styles.safeAreView}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <NavigationContainer>
+            <Drawer.Navigator initialRouteName="Trending">
+              <Drawer.Screen
+                name="Trending"
+                component={Trending}
+                options={{title: 'Trending'}}
+              />
+              <Drawer.Screen
+                name="Movies"
+                component={Test}
+                options={{title: 'Movies'}}
+              />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
-const mapPropsToState = state => {
-  return {movies: state.movies};
-};
 
-export default connect(mapPropsToState)(App);
+export default App;

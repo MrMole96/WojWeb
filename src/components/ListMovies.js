@@ -31,7 +31,7 @@ export const ListMovies = ({items}) => {
         return (
           <MovieItem
             key={Date.now() + index}
-            title={item.title}
+            title={item.name}
             popularity={item.popularity}
             voteAverage={item.vote_average}
             voteCount={item.vote_count}

@@ -3,9 +3,11 @@ const initialState = {
     items: [],
     loader: false,
   },
-  categories: {
-    items: [],
-    loader: false,
+  search: {
+    listTitle: 'Trending',
+    category: 23,
+    year: new Date().getFullYear(),
+    mediaType: 'movie',
   }
 };
 

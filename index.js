@@ -27,16 +27,11 @@ axios.defaults.params = {
 };
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
-const Drawer = createDrawerNavigator();
+
 
 const ReduxApp = () => (
   <Provider store={store}>
-    <NavigationContainer initialRouteName="Home">
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={App} />
-        <Drawer.Screen name="List" component={Test} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <App />
   </Provider>
 );
 

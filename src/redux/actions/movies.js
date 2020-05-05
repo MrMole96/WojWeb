@@ -1,4 +1,5 @@
 import axios from 'axios';
+import initialState from '../reducers/initialState';
 
 const GET_MOVIES_PENDING = 'GET_MOVIES_PENDING';
 const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
@@ -8,9 +9,10 @@ const getMoviesPendingHandler = () => ({
   type: GET_MOVIES_PENDING,
 });
 
-const getMoviesSuccessHandler = data => ({
+const getMoviesSuccessHandler = (data, mediaType) => ({
   type: GET_MOVIES_SUCCESS,
   payload: data,
+  mediaType: mediaType,
 });
 
 const getMoviesFailHandler = err => ({
@@ -18,11 +20,13 @@ const getMoviesFailHandler = err => ({
   payload: err,
 });
 
-export const getMovies = () => async dispatch => {
+export const getMovies = (
+  mediaType = initialState.search.mediaType,
+) => async dispatch => {
   dispatch(getMoviesPendingHandler());
   try {
-    const response = await axios.get('movie/popular');
-    dispatch(getMoviesSuccessHandler(response.data));
+    const response = await axios.get(`trending/${mediaType}/week`);
+    dispatch(getMoviesSuccessHandler(response.data, mediaType));
   } catch (error) {
     dispatch(getMoviesFailHandler(error));
   }

@@ -9,14 +9,19 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import { AppText } from './AppText';
-export const Header = () => {
+import {AppText} from './AppText';
+import {useSelector} from 'react-redux';
+export const Header = ({navigation}) => {
+  const search = useSelector(state => state.search);
+  // const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
         <Icon name="menu" size={35} />
       </TouchableOpacity>
-      <AppText style={styles.text}>WojWeb</AppText>
+      <View>
+        <AppText style={styles.title}>{search.listTitle}</AppText>
+      </View>
       <TouchableOpacity>
         <Icon name="shopping-basket" type="font-awesome" size={35} />
       </TouchableOpacity>
@@ -33,8 +38,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  text: {
-    fontSize: 23,
+  title: {
+    fontSize: 25,
+    textAlign: 'center',
+    color: '#F1FAEE',
+  },
+  subTitle: {
+    fontSize: 20,
     textAlign: 'center',
     color: '#F1FAEE',
   },
