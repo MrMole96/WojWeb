@@ -39,7 +39,6 @@ class Trending extends Component {
       <View style={styles.container}>
         <Header navigation={this.props.navigation} />
         {/* <TopSearchBar /> */}
-        <MediaTypeButtonGroup />
         {this.props.movies.loading ? (
           <View style={styles.loaderDiv}>
             <ActivityIndicator size="large" color="#00ff00" />

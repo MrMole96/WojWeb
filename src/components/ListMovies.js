@@ -10,7 +10,8 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
-import {MovieItem} from './MovieItem';
+import { MovieItem } from './MovieItem';
+import { MediaTypeButtonGroup } from './MediaTypeButtonGroup';
 
 const styles = StyleSheet.create({
   list: {
@@ -21,13 +22,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ListMovies = ({items}) => {
+export const ListMovies = ({ items }) => {
   return (
     <FlatList
+      ListHeaderComponent={<MediaTypeButtonGroup />}
+      ListHeaderComponentStyle={{display:'flex',alignSelf: 'stretch',}}
       contentContainerStyle={styles.list}
       data={items}
       numColumns={2}
-      renderItem={({item}, index) => {
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }, index) => {
         return (
           <MovieItem
             key={Date.now() + index}

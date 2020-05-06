@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     width: 190,
-    height: 267,
+    height: 290,
     paddingBottom: 10,
     margin: 5,
     borderColor: '#000',
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     width: 188,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    height: 190,
+    height: 210,
   },
 });

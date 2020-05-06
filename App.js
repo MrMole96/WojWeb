@@ -50,22 +50,20 @@ class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreView}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <NavigationContainer>
-            <Drawer.Navigator initialRouteName="Trending">
-              <Drawer.Screen
-                name="Trending"
-                component={Trending}
-                options={{title: 'Trending'}}
-              />
-              <Drawer.Screen
-                name="Movies"
-                component={Test}
-                options={{title: 'Movies'}}
-              />
-            </Drawer.Navigator>
-          </NavigationContainer>
-        </ScrollView>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Trending">
+            <Drawer.Screen
+              name="Trending"
+              component={Trending}
+              options={{title: 'Trending'}}
+            />
+            <Drawer.Screen
+              name="Movies"
+              component={Test}
+              options={{title: 'Movies'}}
+            />
+          </Drawer.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     );
   }
