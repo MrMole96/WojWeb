@@ -1,5 +1,9 @@
 const initialState = {
-  movies: {
+  trending: {
+    items: [],
+    loader: false,
+  },
+  movies:{
     items: [],
     loader: false,
   },

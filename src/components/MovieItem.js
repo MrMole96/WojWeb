@@ -10,6 +10,8 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
+  ListView,
+  FlatList,
 } from 'react-native';
 import {AppText} from './AppText';
 export const MovieItem = ({
@@ -19,6 +21,7 @@ export const MovieItem = ({
   voteCount,
   overview,
   posterPath,
+  known_for,
 }) => {
   //http://image.tmdb.org/t/p/w185/wlfDxbGEsW58vGhFljKkcR5IxDj.jpg
   // useEffect(() => {
@@ -28,6 +31,7 @@ export const MovieItem = ({
   //   console.log('poster', poster);
   // }, []);
   var fullPath = 'http://image.tmdb.org/t/p/w500' + posterPath;
+  console.log('actor', known_for);
   return (
     <View style={styles.container}>
       <Image
@@ -35,25 +39,39 @@ export const MovieItem = ({
         source={{uri: fullPath}}
         resizeMode="stretch"
       />
-      <AppText style={styles.title}>{title}</AppText>
-      <View style={styles.details}>
-        <View style={styles.detailItem}>
-          <Icon name="fire" type="material-community" size={18} />
-          <AppText>{popularity}</AppText>
+      <AppText numberOfLines={2} style={styles.title}>
+        {title}
+      </AppText>
+      {!known_for ? (
+        <View style={styles.details}>
+          <View style={styles.detailItem}>
+            <Icon name="fire" type="material-community" size={18} />
+            <AppText>{popularity}</AppText>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="star" size={18} />
+            <AppText>{voteAverage}</AppText>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="plus" type="font-awesome" size={15} />
+            <AppText>{voteCount}</AppText>
+          </View>
         </View>
-        <View style={styles.detailItem}>
-          <Icon name="star" size={18} />
-          <AppText>{voteAverage}</AppText>
+      ) : (
+        <View style={styles.detailsActor}>
+          <FlatList
+            listKey={Date.now()}
+            data={known_for}
+            renderItem={({item}) => (
+              <AppText
+                key={item.id}
+                numberOfLines={1}
+                style={styles.known_movies}>{`\u2022 ${item.title}`}</AppText>
+            )}
+            keyExtractor={item => item.id}
+          />
         </View>
-        <View style={styles.detailItem}>
-          <Icon name="plus" type="font-awesome" size={15} />
-          <AppText>{voteCount}</AppText>
-        </View>
-      </View>
-
-      {/* duration */}
-      {/* gatunek */}
-      {/* duration */}
+      )}
     </View>
   );
 };
@@ -74,7 +92,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 18,
-    marginBottom: 5,
+    marginHorizontal: 9,
   },
   details: {
     display: 'flex',
@@ -82,10 +100,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 5,
   },
+  detailsActor: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    marginHorizontal: 10,
+    width: 170,
+  },
   detailItem: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
@@ -93,6 +120,6 @@ const styles = StyleSheet.create({
     width: 188,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    height: 210,
+    height: 200,
   },
 });

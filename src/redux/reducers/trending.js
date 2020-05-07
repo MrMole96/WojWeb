@@ -1,17 +1,17 @@
 import initialState from './initialState';
 import produce from 'immer';
 
-export const MoviesReducer = (state = initialState.trending, action) =>
+export const TrendingReducer = (state = initialState.trending, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case 'GET_MOVIES_PENDING':
+      case 'GET_TRENDING_PENDING':
         draft.loader = true;
         break;
-      case 'GET_MOVIES_SUCCESS':
+      case 'GET_TRENDING_SUCCESS':
         draft.items = action.payload;
         draft.loader = false;
         break;
-      case 'GET_MOVIES_FAIL':
+      case 'GET_TRENDING_FAIL':
         draft.loader = false;
         break;
       default:

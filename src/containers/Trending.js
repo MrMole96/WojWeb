@@ -14,7 +14,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {getMovies} from '../redux/actions/movies';
+import {getTrending} from '../redux/actions/trending';
 import {Header} from '../components/Header';
 import TopSearchBar from './TopSearchBar';
 import { MediaTypeButtonGroup } from '../components/MediaTypeButtonGroup';
@@ -32,19 +32,20 @@ const styles = StyleSheet.create({
 
 class Trending extends Component {
   componentDidMount() {
-    this.props.dispatch(getMovies());
+    this.props.dispatch(getTrending());
   }
   render() {
     return (
       <View style={styles.container}>
         <Header navigation={this.props.navigation} />
+        <MediaTypeButtonGroup />
         {/* <TopSearchBar /> */}
-        {this.props.movies.loading ? (
+        {this.props.trending.loading ? (
           <View style={styles.loaderDiv}>
             <ActivityIndicator size="large" color="#00ff00" />
           </View>
         ) : (
-          <ListMovies items={this.props.movies.items} />
+          <ListMovies items={this.props.trending.items} />
         )}
       </View>
     );
@@ -52,7 +53,7 @@ class Trending extends Component {
 }
 
 const mapPropsToState = state => {
-  return {movies: state.movies};
+  return {trending: state.trending};
 };
 
 export default connect(mapPropsToState)(Trending);

@@ -17,7 +17,6 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import { Test } from './src/components/Test';
 //EXAMPLE
 //https://api.themoviedb.org/3/movie/550?api_key=2d250b9c85394332faa2f005814960ba
 axios.defaults.params = {};

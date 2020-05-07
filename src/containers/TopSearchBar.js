@@ -22,12 +22,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   pickerCategory: {
-    width: 150,
+    width: 180,
     height: 50,
     backgroundColor: '#A8DADC',
-    borderRadius: 25,
-    borderColor: '#000',
-    borderWidth: 1,
     marginRight: 5,
   },
   pickerYear: {
@@ -79,7 +76,7 @@ class TopSearchBar extends Component {
       <View style={styles.headerPickers}>
         <Picker
           selectedValue={this.props.search.category}
-          style={styles.pickerCategory}
+          style={styles.pickerCategory}            
           onValueChange={itemValue => this.updateSearch('category', itemValue)}>
           {categories}
         </Picker>

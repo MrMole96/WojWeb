@@ -1,5 +1,4 @@
 import axios from 'axios';
-import initialState from '../reducers/initialState';
 
 const GET_MOVIES_PENDING = 'GET_MOVIES_PENDING';
 const GET_MOVIES_SUCCESS = 'GET_MOVIES_SUCCESS';
@@ -20,14 +19,19 @@ const getMoviesFailHandler = err => ({
   payload: err,
 });
 
-export const getMovies = (
-  mediaType = initialState.search.mediaType,
-) => async dispatch => {
+export const getMovies = () => async (dispatch, getState) => {
   dispatch(getMoviesPendingHandler());
   try {
-    const response = await axios.get(`trending/${mediaType}/week`);
-    dispatch(getMoviesSuccessHandler(response.data, mediaType));
+    const response = await axios.get('discover/movie', {
+      params: {
+        year: 2020,
+        with_genres: '28',
+      },
+    });
+    console.log('response', response.data);
+    dispatch(getMoviesSuccessHandler(response.data));
   } catch (error) {
+    console.log(error);
     dispatch(getMoviesFailHandler(error));
   }
 };

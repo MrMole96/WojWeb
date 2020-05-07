@@ -21,7 +21,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {getMovies} from './src/redux/actions/movies';
+import {getMovies} from './src/redux/actions/trending';
 import {connect} from 'react-redux';
 
 import {Button} from 'native-base';
@@ -32,8 +32,8 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {Test} from './src/components/Test';
 import Trending from './src/containers/Trending';
+import  Movies  from './src/containers/Movies';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -59,7 +59,7 @@ class App extends Component {
             />
             <Drawer.Screen
               name="Movies"
-              component={Test}
+              component={Movies}
               options={{title: 'Movies'}}
             />
           </Drawer.Navigator>

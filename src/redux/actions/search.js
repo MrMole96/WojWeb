@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { getMovies } from './movies';
+import {useDispatch} from 'react-redux';
+import {getTrending} from './trending';
 
 const UPDATE_SEARCH = 'UPDATE_SEARCH';
 const UPDATE_MEDIA_TYPE = 'UPDATE_MEDIA_TYPE';
@@ -10,9 +10,9 @@ export const updateSearch = data => ({
 });
 
 export const updateMediaType = mediaType => dispatch => {
-  dispatch(getMovies(mediaType));
-  return dispatch({
+  dispatch({
     type: UPDATE_MEDIA_TYPE,
     payload: mediaType,
   });
+  dispatch(getTrending());
 };
