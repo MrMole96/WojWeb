@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,15 +11,15 @@ import {
   FlatList,
 } from 'react-native';
 // import {Picker} from '@react-native-community/picker';
-import { connect } from 'react-redux';
-import { updateSearch } from '../redux/actions/search';
+import {connect} from 'react-redux';
+import {updateMoviesSearch} from '../redux/actions/search';
 import axios from 'axios';
 const styles = StyleSheet.create({
   headerPickers: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   pickerCategory: {
     width: 180,
@@ -42,7 +42,7 @@ class TopSearchBar extends Component {
   componentDidMount() {
     axios.get('genre/movie/list').then(response => {
       let items = response.data.genres;
-      this.setState({ categories: items });
+      this.setState({categories: items});
     });
   }
 
@@ -51,7 +51,7 @@ class TopSearchBar extends Component {
   };
 
   updateSearch = (name, value) => {
-    this.props.dispatch(updateSearch({ name: name, value: value }));
+    this.props.dispatch(updateMoviesSearch({name: name, value: value}));
   };
 
   years = () => {
@@ -75,15 +75,15 @@ class TopSearchBar extends Component {
     return (
       <View style={styles.headerPickers}>
         <Picker
-          selectedValue={this.props.search.category}
-          style={styles.pickerCategory}            
+          selectedValue={this.props.search.movies.category}
+          style={styles.pickerCategory}
           onValueChange={itemValue => this.updateSearch('category', itemValue)}>
           {categories}
         </Picker>
         {/* Stworzyc do tego nowy komponent */}
         <Picker
           mode="dropdown"
-          selectedValue={this.props.search.year}
+          selectedValue={this.props.search.movies.year}
           onValueChange={itemValue => this.updateSearch('year', itemValue)}
           style={styles.pickerYear}>
           {this.years()}

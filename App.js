@@ -33,7 +33,8 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import Trending from './src/containers/Trending';
-import  Movies  from './src/containers/Movies';
+import Movies from './src/containers/Movies';
+import {updateListTitle} from './src/redux/actions/search';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -50,7 +51,10 @@ class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreView}>
-        <NavigationContainer>
+        <NavigationContainer
+          onStateChange={state =>
+            this.props.dispatch(updateListTitle(state.routeNames[state.index]))
+          }>
           <Drawer.Navigator initialRouteName="Trending">
             <Drawer.Screen
               name="Trending"
@@ -58,9 +62,19 @@ class App extends Component {
               options={{title: 'Trending'}}
             />
             <Drawer.Screen
-              name="Movies"
+              name="Filmy"
               component={Movies}
-              options={{title: 'Movies'}}
+              options={{title: 'Filmy'}}
+            />
+            <Drawer.Screen
+              name="Seriale"
+              component={Movies}
+              options={{title: 'Seriale'}}
+            />
+            <Drawer.Screen
+              name="Gwiazdy"
+              component={Movies}
+              options={{title: 'Gwiazdy'}}
             />
           </Drawer.Navigator>
         </NavigationContainer>
@@ -69,4 +83,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapPropsToState(state) {
+  return {
+    search: state.search,
+  };
+}
+
+export default connect(mapPropsToState)(App);

@@ -20,18 +20,17 @@ const getMoviesFailHandler = err => ({
 });
 
 export const getMovies = () => async (dispatch, getState) => {
+  const {year, category} = getState().search.movies;
   dispatch(getMoviesPendingHandler());
   try {
     const response = await axios.get('discover/movie', {
       params: {
-        year: 2020,
-        with_genres: '28',
+        year: year,
+        with_genres: category,
       },
     });
-    console.log('response', response.data);
     dispatch(getMoviesSuccessHandler(response.data));
   } catch (error) {
-    console.log(error);
     dispatch(getMoviesFailHandler(error));
   }
 };

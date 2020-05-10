@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
 export const MediaTypeButtonGroup = () => {
   const [index, setIndex] = useState(1);
-  const mediaType = useSelector(state => state.search.mediaType);
+  const mediaType = useSelector(state => state.search.trending.mediaType);
   const dispatch = useDispatch();
   const buttons = ['Film', 'Serial', 'Gwiazda'];
   const mediaTypeArray = ['movie', 'tv', 'person'];

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import initialState from '../reducers/initialState';
 
 const GET_TRENDING_PENDING = 'GET_TRENDING_PENDING';
 const GET_TRENDING_SUCCESS = 'GET_TRENDING_SUCCESS';
@@ -21,8 +20,7 @@ const getTrendingFailHandler = err => ({
 });
 
 export const getTrending = () => async (dispatch, getState) => {
-  const mediaType = getState().search.mediaType;
-  console.log('getState', getState())
+  const mediaType = getState().search.trending.mediaType;
   dispatch(getTrendingPendingHandler());
   try {
     const response = await axios.get(`trending/${mediaType}/week`);

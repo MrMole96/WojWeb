@@ -23,15 +23,7 @@ export const MovieItem = ({
   posterPath,
   known_for,
 }) => {
-  //http://image.tmdb.org/t/p/w185/wlfDxbGEsW58vGhFljKkcR5IxDj.jpg
-  // useEffect(() => {
-  //   var poster = axios
-  //     .get('http://image.tmdb.org/t/p/w185/' + posterPath)
-  //     .then(x => console.log('x', x));
-  //   console.log('poster', poster);
-  // }, []);
   var fullPath = 'http://image.tmdb.org/t/p/w500' + posterPath;
-  console.log('actor', known_for);
   return (
     <View style={styles.container}>
       <Image
@@ -68,7 +60,7 @@ export const MovieItem = ({
                 numberOfLines={1}
                 style={styles.known_movies}>{`\u2022 ${item.title}`}</AppText>
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.id.toString()}
           />
         </View>
       )}

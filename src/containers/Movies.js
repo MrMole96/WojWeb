@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 class Movies extends Component {
 
   componentDidMount() {
-    this.props.dispatch(getMovies())
+    this.props.dispatch(getMovies());
   }
 
   render() {
@@ -38,7 +38,7 @@ class Movies extends Component {
       <View style={styles.container}>
         <Header navigation={this.props.navigation} />
         <TopSearchBar />
-        {this.props.movies.loading ? (
+        {this.props.movies.loader ? (
           <View style={styles.loaderDiv}>
             <ActivityIndicator size="large" color="#00ff00" />
           </View>

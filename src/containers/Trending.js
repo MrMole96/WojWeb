@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {ListMovies} from '../components/ListMovies';
+import React, { Component } from 'react';
+import { ListMovies } from '../components/ListMovies';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,9 +13,9 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {getTrending} from '../redux/actions/trending';
-import {Header} from '../components/Header';
+import { connect } from 'react-redux';
+import { getTrending } from '../redux/actions/trending';
+import { Header } from '../components/Header';
 import TopSearchBar from './TopSearchBar';
 import { MediaTypeButtonGroup } from '../components/MediaTypeButtonGroup';
 
@@ -40,20 +40,20 @@ class Trending extends Component {
         <Header navigation={this.props.navigation} />
         <MediaTypeButtonGroup />
         {/* <TopSearchBar /> */}
-        {this.props.trending.loading ? (
+        {this.props.trending.loader ? (
           <View style={styles.loaderDiv}>
             <ActivityIndicator size="large" color="#00ff00" />
           </View>
         ) : (
-          <ListMovies items={this.props.trending.items} />
-        )}
+            <ListMovies items={this.props.trending.items} />
+          )}
       </View>
     );
   }
 }
 
 const mapPropsToState = state => {
-  return {trending: state.trending};
+  return { trending: state.trending };
 };
 
 export default connect(mapPropsToState)(Trending);

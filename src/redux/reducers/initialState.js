@@ -3,16 +3,27 @@ const initialState = {
     items: [],
     loader: false,
   },
-  movies:{
+  movies: {
     items: [],
     loader: false,
   },
   search: {
     listTitle: 'Trending',
-    category: 23,
-    year: new Date().getFullYear(),
-    mediaType: 'movie',
-  }
+    trending: {
+      mediaType: 'movie',
+    },
+    movies: {
+      category: 23,
+      year: new Date().getFullYear(),
+    },
+    series: {
+      category: 23,
+      year: new Date().getFullYear(),
+    },
+    stars: {
+      name: '',
+    },
+  },
 };
 
 export default initialState;

@@ -12,12 +12,11 @@ export const trendingMiddleware = store => next => action => {
         break;
       case 'tv':
         break;
-      case 'person':        
+      case 'person':
         results = results.map(item => {
           const {profile_path, ...rest} = item;
           return {poster_path: profile_path, ...rest};
         });
-        break;
         break;
 
       default:
