@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -38,23 +38,17 @@ const styles = StyleSheet.create({
   },
 });
 
-class TopSearchBar extends Component {
-  componentDidMount() {
+export const TopSearchBar = props => {
+  let [categories, setCategories] = useState([]);
+
+  useEffect(() => {
     axios.get('genre/movie/list').then(response => {
       let items = response.data.genres;
-      this.setState({categories: items});
+      setCategories(items);
     });
-  }
+  }, [setCategories]);
 
-  state = {
-    categories: [],
-  };
-
-  updateSearch = (name, value) => {
-    this.props.dispatch(updateMoviesSearch({name: name, value: value}));
-  };
-
-  years = () => {
+  const years = () => {
     var currentYear = new Date().getFullYear(),
       years = [];
     var startYear = 1990;
@@ -65,36 +59,32 @@ class TopSearchBar extends Component {
       .reverse()
       .map(x => <Picker.Item label={'' + x} value={x} key={Date.now()} />);
   };
-  render() {
-    var categories = null;
-    if (this.state.categories.length) {
-      categories = this.state.categories.map((x, index) => (
-        <Picker.Item key={Date.now() + index} label={x.name} value={x.id} />
-      ));
-    }
-    return (
-      <View style={styles.headerPickers}>
-        <Picker
-          selectedValue={this.props.search.movies.category}
-          style={styles.pickerCategory}
-          onValueChange={itemValue => this.updateSearch('category', itemValue)}>
-          {categories}
-        </Picker>
-        {/* Stworzyc do tego nowy komponent */}
-        <Picker
-          mode="dropdown"
-          selectedValue={this.props.search.movies.year}
-          onValueChange={itemValue => this.updateSearch('year', itemValue)}
-          style={styles.pickerYear}>
-          {this.years()}
-        </Picker>
-      </View>
-    );
+
+  if (categories.length) {
+    categories = categories.map((x, index) => (
+      <Picker.Item key={Date.now() + index} label={x.name} value={x.id} />
+    ));
   }
-}
-function mapPropsToState(state) {
-  return {
-    search: state.search,
-  };
-}
-export default connect(mapPropsToState)(TopSearchBar);
+  return (
+    <View style={styles.headerPickers}>
+      <Picker
+        selectedValue={props.selectedCategory}
+        style={styles.pickerCategory}
+        onValueChange={itemValue =>
+          props.updateSearchHandler('category', itemValue)
+        }>
+        {categories}
+      </Picker>
+      {/* Stworzyc do tego nowy komponent */}
+      <Picker
+        mode="dropdown"
+        selectedValue={props.selectedYear}
+        onValueChange={itemValue =>
+          props.updateSearchHandler('year', itemValue)
+        }
+        style={styles.pickerYear}>
+        {years()}
+      </Picker>
+    </View>
+  );
+};

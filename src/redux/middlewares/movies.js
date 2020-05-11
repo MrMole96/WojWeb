@@ -1,5 +1,8 @@
 export const moviesMiddleware = store => next => action => {
-  if (action.type === 'GET_MOVIES_SUCCESS') {
+  if (
+    action.type === 'GET_MOVIES_SUCCESS' ||
+    action.type === 'GET_SERIES_SUCCESS'
+  ) {
     let {results} = action.payload;
     results = results.map(item => {
       const {title, ...rest} = item;

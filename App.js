@@ -35,6 +35,7 @@ import {
 import Trending from './src/containers/Trending';
 import Movies from './src/containers/Movies';
 import {updateListTitle} from './src/redux/actions/search';
+import Series from './src/containers/Series';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -57,22 +58,22 @@ class App extends Component {
           }>
           <Drawer.Navigator initialRouteName="Trending">
             <Drawer.Screen
-              name="Trending"
+              name="trending"
               component={Trending}
               options={{title: 'Trending'}}
             />
             <Drawer.Screen
-              name="Filmy"
+              name="movies"
               component={Movies}
               options={{title: 'Filmy'}}
             />
             <Drawer.Screen
-              name="Seriale"
-              component={Movies}
+              name="series"
+              component={Series}
               options={{title: 'Seriale'}}
             />
             <Drawer.Screen
-              name="Gwiazdy"
+              name="stars"
               component={Movies}
               options={{title: 'Gwiazdy'}}
             />

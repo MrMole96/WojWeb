@@ -7,6 +7,14 @@ const initialState = {
     items: [],
     loader: false,
   },
+  series: {
+    items: [],
+    loader: false,
+  },
+  stars: {
+    items: [],
+    loader: false,
+  },
   search: {
     listTitle: 'Trending',
     trending: {
