@@ -14,6 +14,7 @@ import {
 import {connect} from 'react-redux';
 import {updateMoviesSearch} from '../redux/actions/search';
 import axios from 'axios';
+import {TextInput} from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   headerPickers: {
     display: 'flex',
@@ -35,6 +36,15 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: '#000',
     borderWidth: 1,
+  },
+  textInput: {
+    paddingLeft: 6,
+    height: 40,
+    width: 200,
+    fontSize: 20,
+    backgroundColor: '#A8DADC',
+    borderBottomWidth: 1,
+    borderRadius: 5,
   },
 });
 
@@ -67,24 +77,34 @@ export const TopSearchBar = props => {
   }
   return (
     <View style={styles.headerPickers}>
-      <Picker
-        selectedValue={props.selectedCategory}
-        style={styles.pickerCategory}
-        onValueChange={itemValue =>
-          props.updateSearchHandler('category', itemValue)
-        }>
-        {categories}
-      </Picker>
-      {/* Stworzyc do tego nowy komponent */}
-      <Picker
-        mode="dropdown"
-        selectedValue={props.selectedYear}
-        onValueChange={itemValue =>
-          props.updateSearchHandler('year', itemValue)
-        }
-        style={styles.pickerYear}>
-        {years()}
-      </Picker>
+      {!props.isStar ? (
+        <React.Fragment>
+          <Picker
+            selectedValue={props.selectedCategory}
+            style={styles.pickerCategory}
+            onValueChange={itemValue =>
+              props.updateSearchHandler('category', itemValue)
+            }>
+            {categories}
+          </Picker>
+          <Picker
+            mode="dropdown"
+            selectedValue={props.selectedYear}
+            onValueChange={itemValue =>
+              props.updateSearchHandler('year', itemValue)
+            }
+            style={styles.pickerYear}>
+            {years()}
+          </Picker>
+        </React.Fragment>
+      ) : (
+        <TextInput
+          style={styles.textInput}
+          placeholder={'Tom hanks...'}
+          onChangeText={text => props.updateSearchHandler('query', text)}
+          value={props.query}
+        />
+      )}
     </View>
   );
 };

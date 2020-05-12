@@ -29,7 +29,7 @@ const initialState = {
       year: new Date().getFullYear(),
     },
     stars: {
-      name: '',
+      query: '',
     },
   },
 };

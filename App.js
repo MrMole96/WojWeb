@@ -36,6 +36,7 @@ import Trending from './src/containers/Trending';
 import Movies from './src/containers/Movies';
 import {updateListTitle} from './src/redux/actions/search';
 import Series from './src/containers/Series';
+import Stars from './src/containers/Stars';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -74,7 +75,7 @@ class App extends Component {
             />
             <Drawer.Screen
               name="stars"
-              component={Movies}
+              component={Stars}
               options={{title: 'Gwiazdy'}}
             />
           </Drawer.Navigator>

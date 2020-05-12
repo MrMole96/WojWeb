@@ -2,6 +2,7 @@ import {useDispatch} from 'react-redux';
 import {getTrending} from './trending';
 import {getMovies} from './movies';
 import {getSeries} from './series';
+import { getStars } from './stars';
 
 const UPDATE_MOVIES_SEARCH = 'UPDATE_MOVIES_SEARCH';
 const UPDATE_SERIES_SEARCH = 'UPDATE_SERIES_SEARCH';
@@ -30,7 +31,7 @@ export const updateMoviesSearch = data => (dispatch, getState) => {
         type: UPDATE_STARS_SEARCH,
         payload: data,
       });
-      //  dispatch(getMovies());
+      dispatch(getStars());
       break;
 
     default:
