@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   SafeAreaView,
@@ -34,7 +35,6 @@ import {
 } from '@react-navigation/drawer';
 import Trending from './src/containers/Trending';
 import Movies from './src/containers/Movies';
-import {updateListTitle} from './src/redux/actions/search';
 import Series from './src/containers/Series';
 import Stars from './src/containers/Stars';
 
@@ -53,30 +53,37 @@ class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreView}>
-        <NavigationContainer
-          onStateChange={state =>
-            this.props.dispatch(updateListTitle(state.routeNames[state.index]))
-          }>
-          <Drawer.Navigator initialRouteName="Trending">
+        <NavigationContainer>
+          <Drawer.Navigator
+            initialRouteName="Trending"
+            drawerType="slide"
+            drawerStyle={{
+              backgroundColor: '#c6cbef',
+              width: 240,
+            }}>
             <Drawer.Screen
               name="trending"
               component={Trending}
               options={{title: 'Trending'}}
+              initialParams={{title: 'Trending'}}
             />
             <Drawer.Screen
               name="movies"
               component={Movies}
               options={{title: 'Filmy'}}
+              initialParams={{title: 'Filmy'}}
             />
             <Drawer.Screen
               name="series"
               component={Series}
               options={{title: 'Seriale'}}
+              initialParams={{title: 'Seriale'}}
             />
             <Drawer.Screen
               name="stars"
               component={Stars}
               options={{title: 'Gwiazdy'}}
+              initialParams={{title: 'Gwiazdy'}}
             />
           </Drawer.Navigator>
         </NavigationContainer>

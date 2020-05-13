@@ -18,6 +18,7 @@ import {getMovies} from '../redux/actions/movies';
 import {getSeries} from '../redux/actions/series';
 import {updateSeriesSearch, updateMoviesSearch} from '../redux/actions/search';
 import {Loading} from '../components/Loading';
+import { withDownloadUpdate } from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,37 +32,24 @@ const styles = StyleSheet.create({
 });
 
 class Series extends Component {
-  componentDidMount() {
-    this.props.dispatch(getSeries());
-  }
-
-  updateSearch = (name, value) => {
-    this.props.dispatch(updateMoviesSearch({name: name, value: value}));
-  };
-
   render() {
-    const {category, year} = this.props.search;
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
-        <TopSearchBar
-          updateSearchHandler={this.updateSearch}
-          selectedYear={year}
-          selectedCategory={category}
+        <Header
+          navigation={this.props.navigation}
+          title={this.props.route.params.title}
         />
-        <Loading loader={this.props.series.loader}>
-          <ListMovies items={this.props.series.items} />
+        <TopSearchBar
+          updateSearchHandler={this.props.updateSearchHandler}
+          selectedYear={this.props.searchData.year}
+          selectedCategory={this.props.searchData.category}
+        />
+        <Loading loader={this.props.loader}>
+          <ListMovies items={this.props.items} />
         </Loading>
       </View>
     );
   }
 }
 
-const mapPropsToState = state => {
-  return {
-    series: state.series,
-    search: state.search.series,
-  };
-};
-
-export default connect(mapPropsToState)(Series);
+export default withDownloadUpdate(Series);

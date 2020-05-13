@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {AppText} from './AppText';
 import {useSelector} from 'react-redux';
-export const Header = ({navigation}) => {
+export const Header = ({navigation,title}) => {
   const search = useSelector(state => state.search);
   return (
     <View style={styles.header}>
@@ -19,7 +19,7 @@ export const Header = ({navigation}) => {
         <Icon name="menu" size={35} />
       </TouchableOpacity>
       <View>
-        <AppText style={styles.title}>{search.listTitle}</AppText>
+        <AppText style={styles.title}>{title}</AppText>
       </View>
       <TouchableOpacity>
         <Icon name="shopping-basket" type="font-awesome" size={35} />

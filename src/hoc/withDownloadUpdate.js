@@ -4,12 +4,14 @@ import {getTrending} from '../redux/actions/trending';
 import {getMovies} from '../redux/actions/movies';
 import {getSeries} from '../redux/actions/series';
 import {getStars} from '../redux/actions/stars';
-import {updateMoviesSearch} from '../redux/actions/search';
+import {updateMoviesSearch, updateListTitle} from '../redux/actions/search';
 
 export const withDownloadUpdate = WrappedComponent => {
   class HOComponent extends Component {
     componentDidMount() {
-      switch (this.props.search.listTitle) {
+      const {name} = this.props.route;
+      this.props.dispatch(updateListTitle(name));
+      switch (name) {
         case 'trending':
           this.props.dispatch(getTrending());
           break;
@@ -33,11 +35,12 @@ export const withDownloadUpdate = WrappedComponent => {
 
     render() {
       const search = this.props.search;
+      const title = this.props.route.name;
       return (
         <WrappedComponent
-          searchData={search[search.listTitle]}
+          searchData={search[title]}
           updateSearchHandler={this.updateSearch}
-          {...this.props[this.props.search.listTitle]}
+          {...this.props[this.props.route.name]}
           {...this.props}
         />
       );

@@ -34,9 +34,13 @@ const styles = StyleSheet.create({
 
 class Trending extends Component {
   render() {
+    console.log('TRENDING');
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
+        <Header
+          navigation={this.props.navigation}
+          title={this.props.route.params.title}
+        />
         <MediaTypeButtonGroup />
         <Loading loader={this.props.loader}>
           <ListMovies items={this.props.items} />

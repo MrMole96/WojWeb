@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,14 +10,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import { Header } from '../components/Header';
-import { TopSearchBar } from './TopSearchBar';
-import { ListMovies } from '../components/ListMovies';
-import { connect } from 'react-redux';
-import { getMovies } from '../redux/actions/movies';
-import { updateMoviesSearch } from '../redux/actions/search';
-import { Loading } from '../components/Loading';
-import { withDownloadUpdate } from '../hoc/withDownloadUpdate';
+import {Header} from '../components/Header';
+import {TopSearchBar} from './TopSearchBar';
+import {ListMovies} from '../components/ListMovies';
+import {connect} from 'react-redux';
+import {getMovies} from '../redux/actions/movies';
+import {updateMoviesSearch} from '../redux/actions/search';
+import {Loading} from '../components/Loading';
+import {withDownloadUpdate} from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +34,10 @@ class Movies extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
+        <Header
+          navigation={this.props.navigation}
+          title={this.props.route.params.title}
+        />
         <TopSearchBar
           updateSearchHandler={this.props.updateSearchHandler}
           selectedYear={this.props.searchData.year}

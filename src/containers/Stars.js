@@ -17,6 +17,7 @@ import {TopSearchBar} from './TopSearchBar';
 import {ListMovies} from '../components/ListMovies';
 import {connect} from 'react-redux';
 import {Loading} from '../components/Loading';
+import { withDownloadUpdate } from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,37 +31,25 @@ const styles = StyleSheet.create({
 });
 
 class Stars extends Component {
-  componentDidMount() {
-    this.props.dispatch(getStars());
-  }
-
-  updateSearch = (name, value) => {
-    this.props.dispatch(updateMoviesSearch({name: name, value: value}));
-  };
-
   render() {
     const {query} = this.props.search;
     return (
       <View style={styles.container}>
-        <Header navigation={this.props.navigation} />
+        <Header
+          navigation={this.props.navigation}
+          title={this.props.route.params.title}
+        />
         <TopSearchBar
           isStar
-          updateSearchHandler={this.updateSearch}
-          query={query}
+          updateSearchHandler={this.props.updateSearchHandler}
+          query={this.props.searchData.query}
         />
-        <Loading loader={this.props.stars.loader}>
-          <ListMovies items={this.props.stars.items} />
+        <Loading loader={this.props.loader}>
+          <ListMovies items={this.props.items} />
         </Loading>
       </View>
     );
   }
 }
 
-const mapPropsToState = state => {
-  return {
-    stars: state.stars,
-    search: state.search.stars,
-  };
-};
-
-export default connect(mapPropsToState)(Stars);
+export default withDownloadUpdate(Stars);
