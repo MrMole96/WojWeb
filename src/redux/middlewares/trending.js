@@ -1,8 +1,6 @@
 export const trendingMiddleware = store => next => action => {
   if (action.type === 'GET_TRENDING_SUCCESS') {
     let {results} = action.payload;
-
-    console.log('mediaType', action.mediaType);
     switch (action.mediaType) {
       case 'movie':
         results = results.map(item => {

@@ -16,7 +16,7 @@ const initialState = {
     loader: false,
   },
   search: {
-    listTitle: 'Trending',
+    listTitle: 'trending',
     trending: {
       mediaType: 'movie',
     },

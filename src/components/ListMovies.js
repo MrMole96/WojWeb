@@ -25,8 +25,6 @@ const styles = StyleSheet.create({
 export const ListMovies = ({ items }) => {
   return (
     <FlatList
-      // ListHeaderComponent={<MediaTypeButtonGroup />}
-      // ListHeaderComponentStyle={{display:'flex',alignSelf: 'stretch',}}
       contentContainerStyle={styles.list}
       data={items}
       numColumns={2}

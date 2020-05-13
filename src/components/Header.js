@@ -13,7 +13,6 @@ import {AppText} from './AppText';
 import {useSelector} from 'react-redux';
 export const Header = ({navigation}) => {
   const search = useSelector(state => state.search);
-  // const navigation = useNavigation();
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>

@@ -33,9 +33,6 @@ const styles = StyleSheet.create({
 });
 
 class Trending extends Component {
-  componentDidMount() {
-    //this.props.dispatch(getTrending());
-  }
   render() {
     return (
       <View style={styles.container}>
@@ -48,9 +45,5 @@ class Trending extends Component {
     );
   }
 }
-
-// const mapPropsToState = state => {
-//   return { trending: state.trending };
-// };
 
 export default withDownloadUpdate(Trending);
