@@ -16,6 +16,7 @@ import {ListMovies} from '../components/ListMovies';
 import {connect} from 'react-redux';
 import {getMovies} from '../redux/actions/movies';
 import {updateMoviesSearch} from '../redux/actions/search';
+import {Loading} from '../components/Loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,13 +48,9 @@ class Movies extends Component {
           selectedYear={year}
           selectedCategory={category}
         />
-        {this.props.movies.loader ? (
-          <View style={styles.loaderDiv}>
-            <ActivityIndicator size="large" color="#00ff00" />
-          </View>
-        ) : (
+        <Loading loader={this.props.movies.loader}>
           <ListMovies items={this.props.movies.items} />
-        )}
+        </Loading>
       </View>
     );
   }

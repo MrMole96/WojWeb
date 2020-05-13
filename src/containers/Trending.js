@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ListMovies } from '../components/ListMovies';
+import React, {Component} from 'react';
+import {ListMovies} from '../components/ListMovies';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,11 +13,13 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { getTrending } from '../redux/actions/trending';
-import { Header } from '../components/Header';
+import {connect} from 'react-redux';
+import {getTrending} from '../redux/actions/trending';
+import {Header} from '../components/Header';
 import TopSearchBar from './TopSearchBar';
-import { MediaTypeButtonGroup } from '../components/MediaTypeButtonGroup';
+import {MediaTypeButtonGroup} from '../components/MediaTypeButtonGroup';
+import {Loading} from '../components/Loading';
+import {withDownloadUpdate} from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,28 +34,23 @@ const styles = StyleSheet.create({
 
 class Trending extends Component {
   componentDidMount() {
-    this.props.dispatch(getTrending());
+    //this.props.dispatch(getTrending());
   }
   render() {
     return (
       <View style={styles.container}>
         <Header navigation={this.props.navigation} />
         <MediaTypeButtonGroup />
-        {/* <TopSearchBar /> */}
-        {this.props.trending.loader ? (
-          <View style={styles.loaderDiv}>
-            <ActivityIndicator size="large" color="#00ff00" />
-          </View>
-        ) : (
-            <ListMovies items={this.props.trending.items} />
-          )}
+        <Loading loader={this.props.loader}>
+          <ListMovies items={this.props.items} />
+        </Loading>
       </View>
     );
   }
 }
 
-const mapPropsToState = state => {
-  return { trending: state.trending };
-};
+// const mapPropsToState = state => {
+//   return { trending: state.trending };
+// };
 
-export default connect(mapPropsToState)(Trending);
+export default withDownloadUpdate(Trending);

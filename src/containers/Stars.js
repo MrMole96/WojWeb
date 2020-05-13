@@ -16,6 +16,7 @@ import {Header} from '../components/Header';
 import {TopSearchBar} from './TopSearchBar';
 import {ListMovies} from '../components/ListMovies';
 import {connect} from 'react-redux';
+import {Loading} from '../components/Loading';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,13 +48,9 @@ class Stars extends Component {
           updateSearchHandler={this.updateSearch}
           query={query}
         />
-        {this.props.stars.loader ? (
-          <View style={styles.loaderDiv}>
-            <ActivityIndicator size="large" color="#00ff00" />
-          </View>
-        ) : (
+        <Loading loader={this.props.stars.loader}>
           <ListMovies items={this.props.stars.items} />
-        )}
+        </Loading>
       </View>
     );
   }
