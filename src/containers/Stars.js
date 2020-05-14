@@ -1,5 +1,5 @@
 import {getStars} from '../redux/actions/stars';
-import {updateMoviesSearch} from '../redux/actions/search';
+import {updateMoviesSearch, updateStarsSearch} from '../redux/actions/search';
 import React, {Component} from 'react';
 import {
   SafeAreaView,
@@ -17,7 +17,7 @@ import {TopSearchBar} from './TopSearchBar';
 import {ListMovies} from '../components/ListMovies';
 import {connect} from 'react-redux';
 import {Loading} from '../components/Loading';
-import { withDownloadUpdate } from '../hoc/withDownloadUpdate';
+import {withDownloadUpdate} from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
 
 class Stars extends Component {
   render() {
-    const {query} = this.props.search;
     return (
       <View style={styles.container}>
         <Header
@@ -42,14 +41,20 @@ class Stars extends Component {
         <TopSearchBar
           isStar
           updateSearchHandler={this.props.updateSearchHandler}
-          query={this.props.searchData.query}
+          query={this.props.stars.query}
         />
-        <Loading loader={this.props.loader}>
-          <ListMovies items={this.props.items} />
+        <Loading loader={this.props.stars.loader}>
+          <ListMovies items={this.props.stars.items} />
         </Loading>
       </View>
     );
   }
 }
 
-export default withDownloadUpdate(Stars);
+const mapPropsToState = ({stars, search}) => {
+  return {stars, search};
+};
+
+export default connect(mapPropsToState)(
+  withDownloadUpdate(Stars, getStars, updateStarsSearch),
+);

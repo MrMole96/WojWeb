@@ -40,15 +40,21 @@ class Movies extends Component {
         />
         <TopSearchBar
           updateSearchHandler={this.props.updateSearchHandler}
-          selectedYear={this.props.searchData.year}
-          selectedCategory={this.props.searchData.category}
+          selectedYear={this.props.search.movies.year}
+          selectedCategory={this.props.search.movies.category}
         />
-        <Loading loader={this.props.loader}>
-          <ListMovies items={this.props.items} />
+        <Loading loader={this.props.movies.loader}>
+          <ListMovies items={this.props.movies.items} />
         </Loading>
       </View>
     );
   }
 }
 
-export default withDownloadUpdate(Movies);
+const mapPropsToState = ({movies, search}) => {
+  return {movies, search};
+};
+
+export default connect(mapPropsToState)(
+  withDownloadUpdate(Movies, getMovies, updateMoviesSearch),
+);

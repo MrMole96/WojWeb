@@ -18,7 +18,7 @@ import {getMovies} from '../redux/actions/movies';
 import {getSeries} from '../redux/actions/series';
 import {updateSeriesSearch, updateMoviesSearch} from '../redux/actions/search';
 import {Loading} from '../components/Loading';
-import { withDownloadUpdate } from '../hoc/withDownloadUpdate';
+import {withDownloadUpdate} from '../hoc/withDownloadUpdate';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,15 +41,21 @@ class Series extends Component {
         />
         <TopSearchBar
           updateSearchHandler={this.props.updateSearchHandler}
-          selectedYear={this.props.searchData.year}
-          selectedCategory={this.props.searchData.category}
+          selectedYear={this.props.search.series.year}
+          selectedCategory={this.props.search.series.category}
         />
-        <Loading loader={this.props.loader}>
-          <ListMovies items={this.props.items} />
+        <Loading loader={this.props.series.loader}>
+          <ListMovies items={this.props.series.items} />
         </Loading>
       </View>
     );
   }
 }
 
-export default withDownloadUpdate(Series);
+const mapPropsToState = ({series, search}) => {
+  return {series, search};
+};
+
+export default connect(mapPropsToState)(
+  withDownloadUpdate(Series, getSeries, updateSeriesSearch),
+);

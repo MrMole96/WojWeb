@@ -79,20 +79,22 @@ export const TopSearchBar = props => {
     <View style={styles.headerPickers}>
       {!props.isStar ? (
         <React.Fragment>
-          <Picker
-            selectedValue={props.selectedCategory}
-            style={styles.pickerCategory}
-            onValueChange={itemValue =>
-              props.updateSearchHandler('category', itemValue)
-            }>
-            {categories}
-          </Picker>
+          {categories.length > 0 && years().length > 0 && (
+            <Picker
+              selectedValue={props.selectedCategory}
+              style={styles.pickerCategory}
+              onValueChange={itemValue => {
+                props.updateSearchHandler('category', itemValue);
+              }}>
+              {categories}
+            </Picker>
+          )}
           <Picker
             mode="dropdown"
             selectedValue={props.selectedYear}
-            onValueChange={itemValue =>
-              props.updateSearchHandler('year', itemValue)
-            }
+            onValueChange={itemValue => {
+              props.updateSearchHandler('year', itemValue);
+            }}
             style={styles.pickerYear}>
             {years()}
           </Picker>

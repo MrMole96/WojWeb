@@ -16,16 +16,15 @@ const initialState = {
     loader: false,
   },
   search: {
-    listTitle: 'trending',
     trending: {
       mediaType: 'movie',
     },
     movies: {
-      category: 23,
+      category: 28,
       year: new Date().getFullYear(),
     },
     series: {
-      category: 23,
+      category: 28,
       year: new Date().getFullYear(),
     },
     stars: {

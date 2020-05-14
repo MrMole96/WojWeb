@@ -6,51 +6,29 @@ import {getSeries} from '../redux/actions/series';
 import {getStars} from '../redux/actions/stars';
 import {updateMoviesSearch, updateListTitle} from '../redux/actions/search';
 
-export const withDownloadUpdate = WrappedComponent => {
+export const withDownloadUpdate = (
+  WrappedComponent,
+  fetchData,
+  updateSearch,
+) => {
   class HOComponent extends Component {
     componentDidMount() {
-      const {name} = this.props.route;
-      this.props.dispatch(updateListTitle(name));
-      switch (name) {
-        case 'trending':
-          this.props.dispatch(getTrending());
-          break;
-        case 'movies':
-          this.props.dispatch(getMovies());
-          break;
-        case 'series':
-          this.props.dispatch(getSeries());
-          break;
-        case 'stars':
-          this.props.dispatch(getStars());
-          break;
-        default:
-          break;
-      }
+      this.props.navigation.addListener('focus', () => {
+        this.props.dispatch(fetchData());
+      });
     }
 
     updateSearch = (name, value) => {
-      this.props.dispatch(updateMoviesSearch({name: name, value: value}));
+      this.props.dispatch(updateSearch({name: name, value: value}));
     };
 
     render() {
-      const search = this.props.search;
-      const title = this.props.route.name;
+      var {dispatch, ...props} = this.props;
       return (
-        <WrappedComponent
-          searchData={search[title]}
-          updateSearchHandler={this.updateSearch}
-          {...this.props[this.props.route.name]}
-          {...this.props}
-        />
+        <WrappedComponent updateSearchHandler={this.updateSearch} {...props} />
       );
     }
   }
 
-  const mapPropsToState = state => {
-    const {trending, movies, series, stars, search} = state;
-    return {trending, movies, series, stars, search};
-  };
-
-  return connect(mapPropsToState)(HOComponent);
+  return HOComponent;
 };

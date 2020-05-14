@@ -20,6 +20,7 @@ import TopSearchBar from './TopSearchBar';
 import {MediaTypeButtonGroup} from '../components/MediaTypeButtonGroup';
 import {Loading} from '../components/Loading';
 import {withDownloadUpdate} from '../hoc/withDownloadUpdate';
+import {updateMoviesSearch} from '../redux/actions/search';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +35,6 @@ const styles = StyleSheet.create({
 
 class Trending extends Component {
   render() {
-    console.log('TRENDING');
     return (
       <View style={styles.container}>
         <Header
@@ -42,12 +42,18 @@ class Trending extends Component {
           title={this.props.route.params.title}
         />
         <MediaTypeButtonGroup />
-        <Loading loader={this.props.loader}>
-          <ListMovies items={this.props.items} />
+        <Loading loader={this.props.trending.loader}>
+          <ListMovies items={this.props.trending.items} />
         </Loading>
       </View>
     );
   }
 }
 
-export default withDownloadUpdate(Trending);
+const mapPropsToState = ({trending}) => {
+  return {trending};
+};
+
+export default connect(mapPropsToState)(
+  withDownloadUpdate(Trending, getTrending)
+);
