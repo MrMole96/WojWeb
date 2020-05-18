@@ -48,7 +48,7 @@ export const ListMovies = ({items}) => {
           </TouchableOpacity>
         )}
       />
-      <ItemDetails visible={visible} />
+      <ItemDetails visible={visible} visibilityHandler={setVisible} />
     </React.Fragment>
   );
 };
