@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
+import { useSelector } from 'react-redux';
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 15,
+    padding: 0,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -56,20 +57,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   image: {
-    width: 188,
+    width: 220,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    height: 200,
+    height: 240,
   },
 });
 
-export const ItemDetails = props => {
-  var fullPath = 'http://image.tmdb.org/t/p/w500' + props.posterPath;
+export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
+  console.log('item', item);
+  let categories = useSelector(state => state.search.categories);
+  if(item)
+  var fullPath = 'http://image.tmdb.org/t/p/w500' + item.poster_path;
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={props.visible}
+      visible={visible}
       onRequestClose={() => {
         alert('Modal has been closed.');
       }}>
@@ -77,7 +81,7 @@ export const ItemDetails = props => {
         <View style={styles.modalView}>
           <Image
             style={styles.image}
-            source={{ uri: fullPath }}
+            source={{uri: fullPath}}
             resizeMode="stretch"
           />
           <TouchableOpacity
@@ -89,14 +93,14 @@ export const ItemDetails = props => {
             <Icon
               name="close"
               onPress={() => {
-                props.visibilityHandler(!props.visible);
+                visibilityHandler(!visible);
               }}
             />
           </TouchableOpacity>
-          <Text style={styles.modalText}>Hello World!</Text>
+          <Text style={styles.modalText}>Hello Wordld!</Text>
           <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: '#2196F3' }}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
+            style={{...styles.openButton, backgroundColor: '#2196F3'}}>
+            <Text style={styles.textStyle}>Dodaj do schowka</Text>
           </TouchableHighlight>
         </View>
       </View>

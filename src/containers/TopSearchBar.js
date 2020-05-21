@@ -11,8 +11,8 @@ import {
   FlatList,
 } from 'react-native';
 // import {Picker} from '@react-native-community/picker';
-import {connect} from 'react-redux';
-import {updateMoviesSearch} from '../redux/actions/search';
+import {connect, useDispatch, useSelector} from 'react-redux';
+import {updateMoviesSearch, getCategories} from '../redux/actions/search';
 import axios from 'axios';
 import {TextInput} from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
@@ -49,14 +49,12 @@ const styles = StyleSheet.create({
 });
 
 export const TopSearchBar = props => {
-  let [categories, setCategories] = useState([]);
+  let categories = useSelector(state => state.search.categories);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get('genre/movie/list').then(response => {
-      let items = response.data.genres;
-      setCategories(items);
-    });
-  }, [setCategories]);
+  // useEffect(() => {
+  //   dispatch(getCategories());
+  // }, [dispatch]);
 
   const years = () => {
     var currentYear = new Date().getFullYear(),
@@ -69,9 +67,9 @@ export const TopSearchBar = props => {
       .reverse()
       .map(x => <Picker.Item label={'' + x} value={x} key={Date.now()} />);
   };
-
-  if (categories.length) {
-    categories = categories.map((x, index) => (
+  var categoriesList = [];
+  if (!categories.loader) {
+    categoriesList = categories.items.map((x, index) => (
       <Picker.Item key={Date.now() + index} label={x.name} value={x.id} />
     ));
   }
@@ -79,14 +77,14 @@ export const TopSearchBar = props => {
     <View style={styles.headerPickers}>
       {!props.isStar ? (
         <React.Fragment>
-          {categories.length > 0 && years().length > 0 && (
+          {!categories.loader > 0 && years().length > 0 && (
             <Picker
               selectedValue={props.selectedCategory}
               style={styles.pickerCategory}
               onValueChange={itemValue => {
                 props.updateSearchHandler('category', itemValue);
               }}>
-              {categories}
+              {categoriesList}
             </Picker>
           )}
           <Picker

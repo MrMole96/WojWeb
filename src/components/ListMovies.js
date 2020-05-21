@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 
 export const ListMovies = ({items}) => {
   const [visible, setVisible] = useState(false);
+  const [clickedItem, setItem] = useState(null);
   return (
     <React.Fragment>
       <FlatList
@@ -33,10 +34,14 @@ export const ListMovies = ({items}) => {
         data={items}
         numColumns={2}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item}, index) => (
-          <TouchableOpacity onPress={() => setVisible(!visible)}>
+        renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => {
+              setVisible(!visible);
+              setItem(item);
+            }}>
             <MovieItem
-              key={Date.now() + index}
+              key={`movie-${item.id}`}
               title={item.name}
               popularity={item.popularity}
               voteAverage={item.vote_average}
@@ -48,7 +53,11 @@ export const ListMovies = ({items}) => {
           </TouchableOpacity>
         )}
       />
-      <ItemDetails visible={visible} visibilityHandler={setVisible} />
+      <ItemDetails
+        item={clickedItem}
+        visible={visible}
+        visibilityHandler={setVisible}
+      />
     </React.Fragment>
   );
 };

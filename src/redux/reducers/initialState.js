@@ -30,6 +30,10 @@ const initialState = {
     stars: {
       query: '',
     },
+    categories: {
+      items: [],
+      loader: false
+    }
   },
 };
 

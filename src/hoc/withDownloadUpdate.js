@@ -4,7 +4,11 @@ import {getTrending} from '../redux/actions/trending';
 import {getMovies} from '../redux/actions/movies';
 import {getSeries} from '../redux/actions/series';
 import {getStars} from '../redux/actions/stars';
-import {updateMoviesSearch, updateListTitle} from '../redux/actions/search';
+import {
+  updateMoviesSearch,
+  updateListTitle,
+  getCategories,
+} from '../redux/actions/search';
 
 export const withDownloadUpdate = (
   WrappedComponent,
@@ -13,6 +17,10 @@ export const withDownloadUpdate = (
 ) => {
   class HOComponent extends Component {
     componentDidMount() {
+      if (this.props.categories.items.length === 0) {
+        this.props.dispatch(getCategories());
+      }
+
       this.props.navigation.addListener('focus', () => {
         this.props.dispatch(fetchData());
       });
@@ -29,6 +37,11 @@ export const withDownloadUpdate = (
       );
     }
   }
+  function mapStateToProps(state) {
+    return {
+      categories: state.search.categories,
+    };
+  }
 
-  return HOComponent;
+  return connect(mapStateToProps)(HOComponent);
 };

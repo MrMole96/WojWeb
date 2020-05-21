@@ -19,6 +19,16 @@ export const SearchReducer = (state = initialState.search, action) =>
       case 'UPDATE_LIST_TITLE':
         draft.listTitle = action.payload;
         break;
+      case 'GET_CATEGORIES':
+        draft.categories.loader = true;
+        break;
+      case 'GET_CATEGORIES_SUCCESS':
+        draft.categories.items = action.payload;
+        draft.categories.loader = false;
+        break;
+      case 'GET_CATEGORIES_FAIL':
+        draft.categories.loader = false;
+        break;
       default:
         return draft;
     }

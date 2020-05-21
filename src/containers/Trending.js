@@ -34,9 +34,7 @@ const styles = StyleSheet.create({
 });
 
 class Trending extends Component {
-  
   render() {
-    console.log(this.props)
     return (
       <View style={styles.container}>
         <Header
@@ -45,7 +43,10 @@ class Trending extends Component {
         />
         <MediaTypeButtonGroup />
         <Loading loader={this.props.trending.loader}>
-          <ListMovies items={this.props.trending.items} navigation={this.props.navigation} />
+          <ListMovies
+            items={this.props.trending.items}
+            navigation={this.props.navigation}
+          />
         </Loading>
       </View>
     );
@@ -57,5 +58,5 @@ const mapPropsToState = ({trending}) => {
 };
 
 export default connect(mapPropsToState)(
-  withDownloadUpdate(Trending, getTrending)
+  withDownloadUpdate(Trending, getTrending),
 );
