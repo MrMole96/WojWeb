@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,9 +11,9 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {MovieItem} from './MovieItem';
-import {MediaTypeButtonGroup} from './MediaTypeButtonGroup';
-import {ItemDetails} from './ItemDetails';
+import { MovieItem } from './MovieItem';
+import { MediaTypeButtonGroup } from './MediaTypeButtonGroup';
+import { ItemDetails } from './ItemDetails';
 
 const styles = StyleSheet.create({
   list: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ListMovies = ({items}) => {
+export const ListMovies = ({ items }) => {
   const [visible, setVisible] = useState(false);
   const [clickedItem, setItem] = useState(null);
   return (
@@ -34,7 +34,7 @@ export const ListMovies = ({items}) => {
         data={items}
         numColumns={2}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
               setVisible(!visible);
@@ -53,11 +53,12 @@ export const ListMovies = ({items}) => {
           </TouchableOpacity>
         )}
       />
-      <ItemDetails
+      {clickedItem && (<ItemDetails
         item={clickedItem}
         visible={visible}
         visibilityHandler={setVisible}
-      />
+      />)}
+
     </React.Fragment>
   );
 };
