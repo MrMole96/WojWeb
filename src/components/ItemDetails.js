@@ -13,6 +13,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
@@ -26,12 +27,13 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    height: 500,
-    width: 300,
+    height:
+      Dimensions.get('window').height - Dimensions.get('window').height * 0.15,
+    width:
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.23,
     position: 'relative',
     backgroundColor: '#A8DADC',
     borderRadius: 20,
-    padding: 0,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: '#F194FF',
+    backgroundColor: '#2196F3',
     borderRadius: 20,
     padding: 10,
     elevation: 2,
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 5,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 20,
     marginHorizontal: 9,
   },
   overview: {
@@ -65,18 +67,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: 220,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    height: 240,
+    flex: 3,
+    marginTop: -1,
+    width: '100%',
+    borderTopLeftRadius: 13,
+    borderTopRightRadius: 13,
   },
   categories: {
     flex: 1,
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // borderColor: 'red',
-    // borderWidth: 2,
     paddingHorizontal: 9,
   },
   categoryItem: {
@@ -135,12 +134,13 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
           <View>
             <AppText style={styles.title}>{item.name}</AppText>
           </View>
-          <ScrollView style={styles.overview}>
+          <ScrollView style={styles.overview} persistentScrollbar={true}>
             <AppText style={{fontSize: 15}}>{item.overview}</AppText>
           </ScrollView>
           <View style={styles.categories}>
             {/* <AppText>Gatunki</AppText> */}
             <FlatList
+              contentContainerStyle={{flex: 1, justifyContent: 'center'}}
               listKey={Date.now()}
               data={movieGenres}
               numColumns={2}
@@ -155,8 +155,7 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
               keyExtractor={item => item.id.toString()}
             />
           </View>
-          <TouchableHighlight
-            style={{...styles.openButton, backgroundColor: '#2196F3'}}>
+          <TouchableHighlight style={styles.openButton}>
             <AppText style={styles.textStyle}>Dodaj do schowka</AppText>
           </TouchableHighlight>
         </View>
