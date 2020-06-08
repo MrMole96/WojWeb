@@ -16,8 +16,9 @@ import {
   Dimensions,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {AppText} from './AppText';
+import {addItemBagHandler} from '../redux/actions/bag';
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
@@ -98,14 +99,13 @@ const styles = StyleSheet.create({
 });
 
 export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
-  console.log('item', item);
+  const dispatch = useDispatch();
   let categories = useSelector(state => state.search.categories);
   var fullPath;
   var movieGenres = [];
   if (item) {
     fullPath = 'http://image.tmdb.org/t/p/w500' + item.poster_path;
     movieGenres = categories.items.filter(x => item.genre_ids.includes(x.id));
-    console.log(movieGenres);
   }
 
   return (
@@ -155,9 +155,11 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
               keyExtractor={item => item.id.toString()}
             />
           </View>
-          <TouchableHighlight style={styles.openButton}>
+          <TouchableOpacity
+            style={styles.openButton}
+            onPress={() => dispatch(addItemBagHandler(item))}>
             <AppText style={styles.textStyle}>Dodaj do schowka</AppText>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

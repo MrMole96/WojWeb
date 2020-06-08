@@ -15,6 +15,9 @@ const initialState = {
     items: [],
     loader: false,
   },
+  bag: {
+    items: []
+  },
   search: {
     trending: {
       mediaType: 'movie',

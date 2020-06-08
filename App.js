@@ -37,6 +37,7 @@ import Trending from './src/containers/Trending';
 import Movies from './src/containers/Movies';
 import Series from './src/containers/Series';
 import Stars from './src/containers/Stars';
+import { Bag } from './src/components/Bag';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -86,6 +87,7 @@ class App extends Component {
               initialParams={{title: 'Gwiazdy'}}
             />
           </Drawer.Navigator>
+          <Bag />
         </NavigationContainer>
       </SafeAreaView>
     );

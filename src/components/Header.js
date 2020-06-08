@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {AppText} from './AppText';
 import {useSelector} from 'react-redux';
-export const Header = ({navigation,title}) => {
+export const Header = ({navigation, title}) => {
   const search = useSelector(state => state.search);
   return (
     <View style={styles.header}>
