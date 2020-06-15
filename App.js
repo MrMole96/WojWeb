@@ -37,7 +37,7 @@ import Trending from './src/containers/Trending';
 import Movies from './src/containers/Movies';
 import Series from './src/containers/Series';
 import Stars from './src/containers/Stars';
-import { Bag } from './src/components/Bag';
+import Bag from './src/components/Bag';
 
 const styles = StyleSheet.create({
   safeAreView: {
@@ -87,7 +87,7 @@ class App extends Component {
               initialParams={{title: 'Gwiazdy'}}
             />
           </Drawer.Navigator>
-          <Bag />
+          <Bag isOpen={this.props.bag.isOpen} />
         </NavigationContainer>
       </SafeAreaView>
     );
@@ -97,6 +97,7 @@ class App extends Component {
 function mapPropsToState(state) {
   return {
     search: state.search,
+    bag: state.bag,
   };
 }
 

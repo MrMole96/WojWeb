@@ -10,9 +10,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {AppText} from './AppText';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { toggleBagHandler } from '../redux/actions/bag';
 export const Header = ({navigation, title}) => {
   const search = useSelector(state => state.search);
+  const dispatch = useDispatch();
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
@@ -22,7 +24,7 @@ export const Header = ({navigation, title}) => {
         <AppText style={styles.title}>{title}</AppText>
       </View>
       <TouchableOpacity>
-        <Icon name="shopping-basket" type="font-awesome" size={35} />
+        <Icon name="shopping-basket" type="font-awesome" size={35} onPress={()=>dispatch(toggleBagHandler())} />
       </TouchableOpacity>
     </View>
   );

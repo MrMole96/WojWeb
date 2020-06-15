@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,10 +11,10 @@ import {
   FlatList,
 } from 'react-native';
 // import {Picker} from '@react-native-community/picker';
-import {connect, useDispatch, useSelector} from 'react-redux';
-import {updateMoviesSearch, getCategories} from '../redux/actions/search';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { updateMoviesSearch, getCategories } from '../redux/actions/search';
 import axios from 'axios';
-import {TextInput} from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   headerPickers: {
     display: 'flex',
@@ -50,20 +50,15 @@ const styles = StyleSheet.create({
 
 export const TopSearchBar = props => {
   let categories = useSelector(state => state.search.categories);
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getCategories());
-  // }, [dispatch]);
 
   const years = () => {
-    var currentYear = new Date().getFullYear(),
-      years = [];
+    var currentYear = new Date().getFullYear();
+    var yearsArr = [];
     var startYear = 1990;
     while (startYear <= currentYear) {
-      years.push(startYear++);
+      yearsArr.push(startYear++);
     }
-    return years
+    return yearsArr
       .reverse()
       .map(x => <Picker.Item label={'' + x} value={x} key={Date.now()} />);
   };
@@ -98,13 +93,13 @@ export const TopSearchBar = props => {
           </Picker>
         </React.Fragment>
       ) : (
-        <TextInput
-          style={styles.textInput}
-          placeholder={'Tom hanks...'}
-          onChangeText={text => props.updateSearchHandler('query', text)}
-          value={props.query}
-        />
-      )}
+          <TextInput
+            style={styles.textInput}
+            placeholder={'Tom hanks...'}
+            onChangeText={text => props.updateSearchHandler('query', text)}
+            value={props.query}
+          />
+        )}
     </View>
   );
 };

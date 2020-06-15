@@ -16,7 +16,8 @@ const initialState = {
     loader: false,
   },
   bag: {
-    items: []
+    isOpen: false,
+    items: [],
   },
   search: {
     trending: {
