@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     width:
-      Dimensions.get('window').width - Dimensions.get('window').width * 0.525,
+      Dimensions.get('window').width - Dimensions.get('window').width * 0.545,
     height:
-      Dimensions.get('window').height - Dimensions.get('window').height * 0.615,
+      Dimensions.get('window').height - Dimensions.get('window').height * 0.515,
     paddingBottom: 10,
     margin: 5,
     borderRadius: 20,

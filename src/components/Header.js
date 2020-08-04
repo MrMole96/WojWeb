@@ -24,7 +24,12 @@ export const Header = ({navigation, title}) => {
         <AppText style={styles.title}>{title}</AppText>
       </View>
       <TouchableOpacity>
-        <Icon name="shopping-basket" type="font-awesome" size={35} onPress={()=>dispatch(toggleBagHandler())} />
+        <Icon
+          name="shopping-basket"
+          type="font-awesome"
+          size={35}
+          onPress={() => dispatch(toggleBagHandler())}
+        />
       </TouchableOpacity>
     </View>
   );
