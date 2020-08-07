@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Animated,
   View,
   List,
   Text,
@@ -15,10 +16,11 @@ import {
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
-import {Icon} from 'react-native-elements';
-import {useSelector, useDispatch} from 'react-redux';
-import {AppText} from './AppText';
-import {addItemBagHandler} from '../redux/actions/bag';
+import { Easing } from 'react-native-reanimated';
+import { Icon } from 'react-native-elements';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppText } from './AppText';
+import { addItemBagHandler } from '../redux/actions/bag';
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
@@ -46,7 +48,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: '#2196F3',
     borderRadius: 20,
     padding: 10,
     elevation: 2,
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 4,
+    flex: 6,
     marginTop: -1,
     width: '100%',
     borderTopLeftRadius: 13,
@@ -98,8 +99,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
+export const ItemDetails = ({ item, visible, visibilityHandler }, ...props) => {
   const dispatch = useDispatch();
+  const [x, setX] = useState(new Animated.Value(0));
   let categories = useSelector(state => state.search.categories);
   var fullPath;
   var movieGenres = [];
@@ -108,6 +110,23 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
     movieGenres = categories.items.filter(x => item.genre_ids.includes(x.id));
   }
 
+  function onClickTest() {
+    Animated.timing(x, {
+      duration: 1000,
+      toValue: 1,
+      useNativeDriver: false,
+    }).start();
+  }
+
+  var backgroundColor = x.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"],
+  });
+
+  var animatebackGroundColor = {
+    backgroundColor: backgroundColor,
+  };
+  console.log('aaaa')
   return (
     <Modal
       animationType="fade"
@@ -120,7 +139,7 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
         <View style={styles.modalView}>
           <Image
             style={styles.image}
-            source={{uri: fullPath}}
+            source={{ uri: fullPath }}
             resizeMode="stretch"
           />
           <TouchableOpacity style={styles.closeIcon}>
@@ -135,16 +154,16 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
             <AppText style={styles.title}>{item.name}</AppText>
           </View>
           <ScrollView style={styles.overview} persistentScrollbar={true}>
-            <AppText style={{fontSize: 15}}>{item.overview}</AppText>
+            <AppText style={{ fontSize: 15 }}>{item.overview}</AppText>
           </ScrollView>
           <View style={styles.categories}>
             {/* <AppText>Gatunki</AppText> */}
             <FlatList
-              contentContainerStyle={{flex: 1, justifyContent: 'center'}}
+              contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
               listKey={Date.now()}
               data={movieGenres}
               numColumns={2}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <AppText
                   style={styles.categoryItem}
                   key={item.id}
@@ -156,9 +175,14 @@ export const ItemDetails = ({item, visible, visibilityHandler}, ...props) => {
             />
           </View>
           <TouchableOpacity
-            style={styles.openButton}
-            onPress={() => dispatch(addItemBagHandler(item))}>
-            <AppText style={styles.textStyle}>Dodaj do schowka</AppText>
+            onPress={() => {
+              dispatch(addItemBagHandler(item));
+              onClickTest();
+            }}>
+            <Animated.View
+              style={{ ...styles.openButton, ...animatebackGroundColor }}>
+              <AppText style={styles.textStyle}>Dodaj do schowka</AppText>
+            </Animated.View>
           </TouchableOpacity>
         </View>
       </View>
