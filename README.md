@@ -1,2 +1,2 @@
 # WojWeb
-React native application which will help me to find movie to watch.
+React native playground app for movies. RN + Redux-toolkit + Navigation + Reanimated
